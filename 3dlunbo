@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../public/public.css" />
+		<script src="../public/jquery.min.js"></script>
+	</head>
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+		.bigbox{
+			width:1600px;
+	        height:1200px;
+	        position: fixed;
+	        top:0;
+	        left:0;
+	        right:0;
+	        bottom:0;
+	        margin:auto;
+	        background: #eee;
+	        /*overflow: hidden;*/
+		}
+	</style>
+	<script>
+		$(function(){
+			var num=20;
+			var W=1600;
+			var H=1200;
+			var arr=[];
+			for (var i=0;i<num;i++) {
+				//创建场景
+				var secne=$("<div>");
+				secne.css({"width":W,"height":H/num,"perspective":48000});
+				//创建盒子
+				var box=$("<div>");
+				box.css({"width":W,"height":H/num,"position":"relative","transform-style":" preserve-3d","transition":"transform 1s linear "+0.1*i+"s","transform-origin":"center center "+(-W/2)+"px"});
+				//创建6个面
+				for (var j=0;j<6;j++) {
+					var mian=$("<div>");
+					mian.css({"width":W,"position": "absolute","left":0,"top":0});
+					if(j==0){//上面
+						mian.css({"height":W,"transform-origin": "top","transform": "rotateX(-90deg)","background":"#000"});
+					}else if(j==1){//下面
+						mian.css({"bottom":0,"height":W,"transform-origin": "bottom","transform":"translateY("+(H/num-W)+"px)  rotateX(90deg)","background":"#000"});
+					}else if(j==2){//左面
+						mian.css({"height":H/num,"transform-origin":"left","transform": "rotateY(90deg)","background":"url(4.jpg) no-repeat 0 "+(-1/num*H*i)+"px"});
+					}else if(j==3){//右面
+						mian.css({"height":H/num,"transform-origin": "right","transform": "rotateY(-90deg)","background":"url(5.jpg) no-repeat 0 "+(-1/num*H*i)+"px"});
+					}else if(j==4){//前面
+						mian.css({"height":H/num,"transform":"translateZ("+-W+"px)","background":"url(6.jpg) no-repeat 0 "+(-1/num*H*i)+"px"});
+					}else if(j==5){//后面
+						mian.css({"height":H/num,"transform": "rotateY(180deg)","background":"url(6.jpg) no-repeat  0 "+(-1/num*H*i)+"px "});
+					}
+					mian.appendTo(box);
+				}
+				box.appendTo(secne)
+				secne.appendTo($(".bigbox"));
+				arr.push(box);
+			}
+			var inita=0;
+            var speeda=90;
+            setInterval(function(){
+                inita+=speeda;
+                for(var i=0;i<arr.length;i++){
+                	arr[i].css({"transform":"rotateY("+inita+"deg)"})
+                }
+            },5000)
+		})
+	</script>
+	
+	<body>
+		<div class="bigbox"></div>
+	</body>
+</html>
