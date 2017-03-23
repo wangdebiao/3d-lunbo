@@ -25,7 +25,7 @@
 	</style>
 	<script>
 		$(function(){
-			var num=20;
+			var num=10;
 			var W=1600;
 			var H=1200;
 			var arr=[];
@@ -61,12 +61,20 @@
 			}
 			var inita=0;
             var speeda=90;
-            setInterval(function(){
+            
+            function move(){
                 inita+=speeda;
                 for(var i=0;i<arr.length;i++){
                 	arr[i].css({"transform":"rotateY("+inita+"deg)"})
                 }
-            },5000)
+            }
+            var t=setInterval(move,5000);
+            $(window).blur(function(){
+            	clearInterval(t);
+            })
+            $(window).focus(function(){
+            	t=setInterval(move,5000);
+            })
 		})
 	</script>
 	
